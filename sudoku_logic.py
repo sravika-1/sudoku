@@ -5,48 +5,39 @@ def is_valid(board, row, col, num):
     """Check if it's valid to place `num` in the given row and column."""
     if num in board[row] or num in board[:, col]:  # Check row & column
         return False
-
-    # Check 3x3 box
-    start_row, start_col = 3 * (row // 3), 3 * (col // 3)
+    start_row, start_col = 3 * (row // 3), 3 * (col // 3)  # Check 3x3 box
     if num in board[start_row:start_row+3, start_col:start_col+3]:
         return False
-
     return True
 
-def fill_diagonal_boxes(board):
-    """Fill the three diagonal 3x3 boxes with unique numbers from 1-9."""
-    for box in range(3):
-        start = box * 3
-        numbers = np.random.permutation(np.arange(1, 10))  # Unique shuffled numbers
-        index = 0
-        for i in range(3):
-            for j in range(3):
-                board[start + i, start + j] = numbers[index]
-                index += 1
-
 def solve_sudoku(board):
-    """Backtracking algorithm to solve the Sudoku board."""
-    for row in range(9):
-        for col in range(9):
-            if board[row, col] == 0:
-                for num in np.random.permutation(np.arange(1, 10)):  # Shuffle numbers
-                    if is_valid(board, row, col, num):
-                        board[row, col] = num
-                        if solve_sudoku(board):
-                            return True
-                        board[row, col] = 0  # Backtrack
-                return False  # No valid number found
-    return True  # Solved
+    """Solve Sudoku using backtracking."""
+    empty = np.argwhere(board == 0)
+    if empty.size == 0:
+        return True  # Solved
+    row, col = empty[0]
+    for num in range(1, 10):
+        if is_valid(board, row, col, num):
+            board[row, col] = num
+            if solve_sudoku(board):
+                return True
+            board[row, col] = 0  # Backtrack
+    return False
 
 def generate_full_sudoku():
-    """Generates a fully solved Sudoku board with correct diagonals."""
+    """Generates a fully solved Sudoku board."""
     board = np.zeros((9, 9), dtype=int)
-    fill_diagonal_boxes(board)  # Fill the diagonals first
-    solve_sudoku(board)  # Solve the board completely
+    for _ in range(9):  # Fill diagonal blocks
+        row, col = random.randint(0, 8), random.randint(0, 8)
+        num = random.randint(1, 9)
+        if is_valid(board, row, col, num):
+            board[row, col] = num
+
+    solve_sudoku(board)  # Solve completely
     return board
 
 def remove_numbers(board, difficulty="medium"):
-    """Removes numbers from a solved board to create a playable puzzle."""
+    """Removes numbers to create a playable puzzle."""
     difficulty_mapping = {"easy": 30, "medium": 40, "hard": 50, "expert": 55}
     remove_cells = difficulty_mapping.get(difficulty, 40)
 
