@@ -1,0 +1,60 @@
+body {
+    background-image: url("harry_potter_background.webp");
+    background-size: cover;
+    font-family: 'Harry Potter', sans-serif;
+    text-align: center;
+}
+
+#game-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+h1 {
+    color: #a52a2a;
+}
+
+.timer {
+    color: red;
+    font-weight: bold;
+    font-size: 1.5em;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px red; }
+    to { text-shadow: 0 0 15px red; }
+}
+
+#sudoku-grid, #solved-sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 40px);
+    grid-gap: 2px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.wrong-move {
+    background-color: red !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.wrong-input {
+    background-color: red !important;
+    color: white !important;
+    font-weight: bold;
+}
+

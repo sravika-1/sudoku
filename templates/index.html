@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter Sudoku</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="game-container">
+        <h1>✨ Harry Potter Sudoku ✨</h1>
+        <div id="username-section">
+            <input type="text" id="username" placeholder="Enter your wizarding name">
+            <button onclick="setUsername()">Next</button>
+        </div>
+        
+        <div id="difficulty-section" style="display: none;">
+            <h2 id="game-title">Hi, <span id="user-name-display"></span>! Solve the Sudoku!</h2>
+            <select id="difficulty">
+                <option value="easy">Easy (10 min)</option>
+                <option value="medium">Medium (7 min)</option>
+                <option value="hard">Hard (5 min)</option>
+                <option value="expert">Expert (3 min)</option>
+            </select>
+            <button onclick="startGame()">Start Game</button>
+        </div>
+
+        <div id="game-section" style="display: none;">
+            <h2>Hi <span id="game-user-name"></span>, solve the Sudoku!</h2>
+            <div id="sudoku-grid"></div>
+            <p class="timer">⏳ Time Left: <span id="timer">--:--</span></p>
+        </div>
+        <div id="game-over-section" style="display: none;">
+            <h2>⏳ Time's Up! Game Over, <span id="final-username"></span>! ⏳</h2>
+            <p>✔️ Correct Moves: <span id="correct-moves">0</span></p>
+            <p>❌ Wrong Moves: <span id="wrong-moves">0</span></p>
+            <div id="solved-sudoku-grid" class="sudoku-grid"></div>
+            <button onclick="restartGame()">Start Again</button>
+        </div>
+    </div>
+    <audio id="background-music" loop>
+        <source src="{{ url_for('static', filename='harry_potter_theme.mp3') }}" type="audio/mpeg">
+    </audio>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
