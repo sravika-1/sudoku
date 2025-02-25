@@ -29,9 +29,11 @@
             <h2>Hi <span id="game-user-name"></span>, solve the Sudoku!</h2>
             <div id="sudoku-grid"></div>
             <p class="timer">⏳ Time Left: <span id="timer">--:--</span></p>
+            <button id="hint-btn" onclick="useHint()">🔍 Use Hint (<span id="hint-count">5</span> left)</button>
+
         </div>
         <div id="game-over-section" style="display: none;">
-            <h2>⏳ Time's Up! Game Over, <span id="final-username"></span>! ⏳</h2>
+            <h2>⏳ Time's Up! ⏳<br><br> Game Over, <span id="final-username"></span>! </h2>
             <p>✔️ Correct Moves: <span id="correct-moves">0</span></p>
             <p>❌ Wrong Moves: <span id="wrong-moves">0</span></p>
             <div id="solved-sudoku-grid" class="sudoku-grid"></div>

@@ -6,6 +6,8 @@ let gameDifficulty = "medium";
 let userInputs = {};  
 let music = document.getElementById("background-music");  // Get audio element
 let currentUsername = ""; 
+let maxHints = 5; // Maximum allowed hints
+let hintsUsed = 0; // Track used hints
 
 function setUsername() {
     let username = document.getElementById("username").value;
@@ -77,13 +79,13 @@ function trackMoves(e, row, col) {
     userInputs[`${row}-${col}`] = value;
 
     // If Easy mode, highlight incorrect values immediately
-    if (gameDifficulty === "easy") {
+   // if (gameDifficulty === "easy") {
         if (value !== solutionGrid[row][col]) {
             e.target.classList.add("wrong-move");
         } else {
             e.target.classList.remove("wrong-move");
         }
-    }
+   // }
 }
 
 function startTimer(difficulty) {
@@ -142,3 +144,37 @@ function endGame() {
 function restartGame() {
     location.reload();
 }
+function useHint() {
+    if (hintsUsed >= maxHints) {
+        alert("No hints left! Use them wisely.");
+        return;
+    }
+
+    let wrongCells = Array.from(document.querySelectorAll(".wrong-move"));
+    let cellToFill = null;
+
+    // Prioritize correcting a wrong move
+    if (wrongCells.length > 0) {
+        cellToFill = wrongCells[0]; // Select first incorrect input
+    } else {
+        // If no wrong move, find an empty cell randomly
+        let emptyCells = Array.from(document.querySelectorAll(".cell")).filter(cell => cell.value === "");
+        if (emptyCells.length === 0) {
+            alert("No empty cells left for hints!");
+            return;
+        }
+        cellToFill = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    }
+
+    if (cellToFill) {
+        let row = parseInt(cellToFill.dataset.row);
+        let col = parseInt(cellToFill.dataset.col);
+        cellToFill.value = solutionGrid[row][col]; // Fill correct answer
+        cellToFill.classList.remove("wrong-move"); // Remove red highlight if fixing a wrong move
+        cellToFill.classList.add("hinted-cell"); // Add highlight class
+        cellToFill.readOnly = true; // Lock the cell
+        hintsUsed++;
+        document.getElementById("hint-count").innerText = maxHints - hintsUsed; // Update hint counter
+    }
+}
+
