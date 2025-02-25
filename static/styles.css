@@ -5,45 +5,30 @@ body {
     text-align: center;
 }
 
+/* ✅ Ensure uniform spacing for perfect alignment */
 #game-container {
+    max-width: 400px;  /* Adjust based on Sudoku size */
+    overflow: hidden;   /* Prevents any overflow */
+    margin: auto;
+    text-align: center;
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
-    display: inline-block;
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 {
     color: #a52a2a;
 }
 
-.timer {
-    color: red;
-    font-weight: bold;
-    font-size: 1.5em;
-    animation: glow 1s infinite alternate;
-}
+
 
 @keyframes glow {
     from { text-shadow: 0 0 5px red; }
     to { text-shadow: 0 0 15px red; }
-}
-
-#sudoku-grid, #solved-sudoku-grid {
-    display: grid;
-    grid-template-columns: repeat(9, 40px);
-    grid-gap: 2px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.cell {
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    font-size: 20px;
-    background-color: white;
-    border: 1px solid black;
 }
 
 .wrong-move {
@@ -57,4 +42,97 @@ h1 {
     color: white !important;
     font-weight: bold;
 }
+
+/* ✅ Ensure the entire Sudoku grid is properly structured */
+#sudoku-grid, #solved-sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    border-collapse: collapse;
+    border: 3px solid black; /* Outer border */
+    width: fit-content;
+    margin: auto; /* Center the Sudoku grid */
+}
+
+/* ✅ Ensure uniform borders for all cells */
+
+
+.cell {
+    text-align: center; /* Centers the text horizontally */
+    vertical-align: middle; /* Centers the text vertically */
+    font-size: 20px; /* Adjusts text size */
+    font-weight: bold;
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+    justify-content: center; /* Horizontally centers the text */
+    height: 40px; /* Adjust cell height if needed */
+    width: 40px; /* Adjust cell width if needed */
+    border: 1px solid black; /* Keeps proper borders */
+    box-sizing: border-box;
+}
+
+
+/* ✅ Apply Thick Borders to Clearly Define 3x3 Boxes */
+.cell:nth-child(9n+1) { 
+    border-left: 3px solid black; /* Left Borders for 3x3 boxes */
+}
+.cell:nth-child(3n) { 
+    border-right: 3px solid black; /* Right Borders for 3x3 boxes */
+}
+.cell:nth-child(-n+9) { 
+    border-top: 3px solid black; /* Top Borders */
+}
+.cell:nth-last-child(-n+9) { 
+    border-bottom: 3px solid black; /* Bottom Borders */
+}
+
+/* ✅ Fix Thick Borders for Horizontal 3x3 Sections */
+.cell:nth-child(n+19):nth-child(-n+27),  
+.cell:nth-child(n+46):nth-child(-n+54) { 
+    border-bottom: 3px solid black; /* Bold borders for every 3rd row */
+}
+
+/* ✅ Remove Unnecessary Double Bold Borders */
+.cell:nth-child(9n) {
+    border-right: 3px solid black; /* Ensure last column gets bold */
+}
+
+
+
+/* ✅ Timer Styling Fix */
+.timer {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: red;
+    text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.6);
+    margin-top: 15px;
+    animation: glow 1s infinite alternate;
+}
+
+#game-over-section button {
+    margin-top: 20px; /* Adds spacing between result board and button */
+    padding: 10px 20px; /* Makes button larger and easier to click */
+    font-size: 16px; /* Increases text size */
+    border-radius: 5px; /* Slightly rounded corners for better appearance */
+    background-color: #d32f2f; /* Button color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#game-over-section button:hover {
+    background-color: #b71c1c; /* Darker shade when hovered */
+}
+
+
+
+
+
+
+
+
+
+
 

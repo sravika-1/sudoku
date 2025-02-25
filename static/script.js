@@ -38,13 +38,10 @@ function startGame() {
             startTimer(gameDifficulty);
         });
 }
-
-
-
-
 function displaySudoku(puzzle) {
     let grid = document.getElementById("sudoku-grid");
     grid.innerHTML = "";
+
     puzzle.forEach((row, r) => {
         row.forEach((num, c) => {
             let cell = document.createElement("input");
@@ -55,6 +52,12 @@ function displaySudoku(puzzle) {
             cell.dataset.row = r;
             cell.dataset.col = c;
 
+            // ✅ Fixing Thick Borders for 3x3 Boxes
+            if ((r + 1) % 3 === 0 && r !== 8) cell.style.borderBottom = "3px solid black";
+            if ((c + 1) % 3 === 0 && c !== 8) cell.style.borderRight = "3px solid black";
+            if (r === 0) cell.style.borderTop = "3px solid black";
+            if (c === 0) cell.style.borderLeft = "3px solid black";
+
             if (num === 0) {
                 cell.addEventListener("input", (e) => trackMoves(e, r, c));
             }
@@ -63,6 +66,8 @@ function displaySudoku(puzzle) {
         });
     });
 }
+
+
 
 function trackMoves(e, row, col) {
     let value = parseInt(e.target.value);
