@@ -3,30 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harry Potter Sudoku</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div id="game-container">
-        <h1>✨ Harry Potter Sudoku ✨</h1>
+        <h1 id="game-title">✨ Harry Potter Sudoku ✨</h1>
         <div id="username-section">
-            <input type="text" id="username" placeholder="Enter your wizarding name">
+            <input type="text" id="username" placeholder="Enter your name">
             <button onclick="setUsername()">Next</button>
         </div>
-        
         <div id="difficulty-section" style="display: none;">
-            <h2 id="game-title">Hi, <span id="user-name-display"></span>! Solve the Sudoku!</h2>
+            <h2 id="user-title">Hi, <span id="user-name-display"></span>! <br><br>Choose the level!</h2>
             <select id="difficulty">
-                <option value="easy">Easy (10 min)</option>
-                <option value="medium">Medium (7 min)</option>
-                <option value="hard">Hard (5 min)</option>
-                <option value="expert">Expert (3 min)</option>
+                <option value="easy">Easy (10 mins)</option>
+                <option value="medium">Medium (10 mins)</option>
+                <option value="hard">Hard (10 mins)</option>
+                <option value="expert">Expert (10 mins)</option>
             </select>
             <button onclick="startGame()">Start Game</button>
         </div>
-
+        
         <div id="game-section" style="display: none;">
-            <h2>Hi <span id="game-user-name"></span>, solve the Sudoku!</h2>
+            <h2 id="user-title">Hi <span id="game-user-name"></span>! <br> Solve the Sudoku!</h2>
             <div id="sudoku-grid"></div>
             <p class="timer">⏳ Time Left: <span id="timer">--:--</span></p>
             <button id="hint-btn" onclick="useHint()">🔍 Use Hint (<span id="hint-count">5</span> left)</button>

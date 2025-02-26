@@ -89,7 +89,7 @@ function trackMoves(e, row, col) {
 }
 
 function startTimer(difficulty) {
-    let time = { easy: 600, medium: 420, hard: 30, expert: 180 }[difficulty];
+    let time = { easy: 30, medium: 600, hard: 600, expert: 600 }[difficulty];
     timer = setInterval(() => {
         if (time <= 0) {
             clearInterval(timer);

@@ -52,6 +52,7 @@ h1 {
     border: 3px solid black; /* Outer border */
     width: fit-content;
     margin: auto; /* Center the Sudoku grid */
+    margin-bottom: 20px;
 }
 
 /* ✅ Ensure uniform borders for all cells */
@@ -110,20 +111,20 @@ h1 {
     animation: glow 1s infinite alternate;
 }
 
-#game-over-section button {
+#game-over-section {
     margin-top: 20px; /* Adds spacing between result board and button */
     padding: 10px 20px; /* Makes button larger and easier to click */
     font-size: 16px; /* Increases text size */
     border-radius: 5px; /* Slightly rounded corners for better appearance */
-    background-color: #d32f2f; /* Button color */
+    background-color: #ff6699; /* Button color */
     color: white;
     border: none;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
-#game-over-section button:hover {
-    background-color: #b71c1c; /* Darker shade when hovered */
+#game-over-section {
+    background-color: #ff6699; /* Darker shade when hovered */
 }
 
 #hint-button {
@@ -165,6 +166,136 @@ h1 {
 #hint-btn:hover {
     background-color: #45a049;
 }
+
+#user-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    background-image: linear-gradient(45deg, #ffcc00, #ff6699, #6699ff, #66ff66);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 3s infinite alternate;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* Style for Username Input */
+input#username {
+    width: 60%;
+    padding: 12px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 2px solid #6699ff;
+    background:  #ff6699;
+    color: white;
+    outline: none;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none; /* Removes default styling */
+    margin-bottom: 20px; /* Adds gap between input and button */
+}
+
+input#username:hover {
+    background: #ffcc00;
+    color: white;
+}
+
+input#username:focus {
+    border-color: #6699ff;
+    background: #ff6699;
+    color: white;
+}
+
+/* Fix placeholder text color */
+input#username::placeholder {
+    color: white;
+    opacity: 1; /* Ensure it's fully visible */
+}
+
+/* Style for Select Dropdown */
+select#difficulty {
+    width: 60%;
+    padding: 12px;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 2px solid #6699ff;
+    background: #ff6699;
+    color: white;
+    outline: none;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px; /* Adds gap between select and button */
+}
+
+select#difficulty:hover {
+    background: #ffcc00;
+    color: black;
+}
+
+select#difficulty:focus {
+    border-color: #6699ff;
+    background: #ff6699;
+    color: white;
+}
+
+/* Style for Buttons */
+button {
+    width: 65%;
+    padding: 15px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #ff6699, #ffcc00);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background: linear-gradient(45deg, #ffcc00, #ff6699);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+#game-title {
+    font-family: 'MedievalSharp', cursive; /* Harry Potter-like font */
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(45deg, #ffcc00, #ff6699, #6699ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientMove 3s infinite linear;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
 
 
 
