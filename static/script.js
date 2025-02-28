@@ -8,6 +8,9 @@ let music = document.getElementById("background-music");  // Get audio element
 let currentUsername = ""; 
 let maxHints = 5; // Maximum allowed hints
 let hintsUsed = 0; // Track used hints
+let totalEmptyCells = 0; // Total empty cells that need to be filled
+let userFilledCells = 0; // Tracks how many cells the user filled
+let hintFilledCells = 0; // Tracks how many cells were filled using hints
 
 function setUsername() {
     let username = document.getElementById("username").value;
@@ -40,9 +43,14 @@ function startGame() {
             startTimer(gameDifficulty);
         });
 }
+
 function displaySudoku(puzzle) {
     let grid = document.getElementById("sudoku-grid");
     grid.innerHTML = "";
+    // Reset count before new game
+    totalEmptyCells = 0;
+    userFilledCells = 0;
+    hintFilledCells = 0; 
 
     puzzle.forEach((row, r) => {
         row.forEach((num, c) => {
@@ -61,6 +69,7 @@ function displaySudoku(puzzle) {
             if (c === 0) cell.style.borderLeft = "3px solid black";
 
             if (num === 0) {
+                totalEmptyCells++; // Count the number of empty cells
                 cell.addEventListener("input", (e) => trackMoves(e, r, c));
             }
 
@@ -69,12 +78,42 @@ function displaySudoku(puzzle) {
     });
 }
 
+function trackMoves(e, row, col) {
+    let value = parseInt(e.target.value);
+    if (!value || isNaN(value)) return;
+
+    // If the user is filling a previously empty cell, count it
+    if (!userInputs[`${row}-${col}`] && !hintsUsed[`${row}-${col}`]) {
+        userFilledCells++; 
+    }
+
+    userInputs[`${row}-${col}`] = value;
+
+    // If Easy mode, highlight incorrect values immediately
+    if (gameDifficulty === "easy") {
+        if (value !== solutionGrid[row][col]) {
+            e.target.classList.add("wrong-move");
+        } else {
+            e.target.classList.remove("wrong-move");
+        }
+    }
+
+    // Check if the board is fully filled (including hints)
+    if ((userFilledCells + hintFilledCells) === totalEmptyCells) {
+        setTimeout(() => {
+            endGame(); // Auto-end game when all empty cells are filled
+        }, 500);
+    }
+}
 
 
 function trackMoves(e, row, col) {
     let value = parseInt(e.target.value);
     if (!value || isNaN(value)) return;
-    
+    // If the user is filling a previously empty cell, count it
+    if (!userInputs[`${row}-${col}`] && !hintsUsed[`${row}-${col}`]) {
+        userFilledCells++; 
+    }
     // Store user input for final validation
     userInputs[`${row}-${col}`] = value;
 
@@ -86,10 +125,17 @@ function trackMoves(e, row, col) {
             e.target.classList.remove("wrong-move");
         }
    // }
+
+  // Check if the user has filled all required cells
+  if ((userFilledCells + hintFilledCells) === totalEmptyCells) {
+    setTimeout(() => {
+        endGame(); // Auto-end game when all empty cells are filled
+    }, 500);
+}
 }
 
 function startTimer(difficulty) {
-    let time = { easy: 30, medium: 600, hard: 600, expert: 600 }[difficulty];
+    let time = { easy: 40, medium: 600, hard: 600, expert: 600 }[difficulty];
     timer = setInterval(() => {
         if (time <= 0) {
             clearInterval(timer);
@@ -100,6 +146,12 @@ function startTimer(difficulty) {
         }
     }, 1000);
 }
+
+function endGameManually() {
+    clearInterval(timer); // Stop the timer
+    endGame(); // Call the existing function to show results
+}
+
 
 function endGame() {
     document.getElementById("game-section").style.display = "none";
@@ -150,6 +202,8 @@ function useHint() {
         return;
     }
 
+   
+
     let wrongCells = Array.from(document.querySelectorAll(".wrong-move"));
     let cellToFill = null;
 
@@ -158,9 +212,12 @@ function useHint() {
         cellToFill = wrongCells[0]; // Select first incorrect input
     } else {
         // If no wrong move, find an empty cell randomly
+        hintFilledCells++;
         let emptyCells = Array.from(document.querySelectorAll(".cell")).filter(cell => cell.value === "");
         if (emptyCells.length === 0) {
-            alert("No empty cells left for hints!");
+            setTimeout(() => {
+                endGame();
+            }, 500);
             return;
         }
         cellToFill = emptyCells[Math.floor(Math.random() * emptyCells.length)];
@@ -175,6 +232,15 @@ function useHint() {
         cellToFill.readOnly = true; // Lock the cell
         hintsUsed++;
         document.getElementById("hint-count").innerText = maxHints - hintsUsed; // Update hint counter
+    }
+
+    let emptyCells = [];
+    
+    if ((userFilledCells + hintFilledCells) === totalEmptyCells){
+        setTimeout(() => {
+            endGame();
+        }, 500);
+        return;
     }
 }
 

@@ -294,6 +294,24 @@ button:active {
     100% { background-position: 0% 50%; }
 }
 
+#end-game-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #cc0000; /* Dark Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+#end-game-btn:hover {
+    background-color: #ff3333; /* Lighter Red */
+}
+
+
 
 
 

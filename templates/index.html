@@ -25,10 +25,10 @@
         
         <div id="game-section" style="display: none;">
             <h2 id="user-title">Hi <span id="game-user-name"></span>! <br> Solve the Sudoku!</h2>
+            <button id="hint-btn" onclick="useHint()">🔍 Use Hint (<span id="hint-count">5</span> left)</button>
             <div id="sudoku-grid"></div>
             <p class="timer">⏳ Time Left: <span id="timer">--:--</span></p>
-            <button id="hint-btn" onclick="useHint()">🔍 Use Hint (<span id="hint-count">5</span> left)</button>
-
+            <button id="end-game-button" onclick="endGame()">End Game</button>
         </div>
         <div id="game-over-section" style="display: none;">
             <h2>⏳ Time's Up! ⏳<br><br> Game Over, <span id="final-username"></span>! </h2>
